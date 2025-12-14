@@ -6,7 +6,7 @@ import { Game } from './game';
 import { MessageType, Message, GameRoom } from './types';
 
 const PORT = process.env.PORT || 3000;
-const GAME_TICK_RATE = 1000 / 60; // 60 FPS
+const GAME_TICK_RATE = 1000 / 120; // 60 FPS
 
 class PongServer {
   private wss: WebSocketServer;
