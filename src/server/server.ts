@@ -13,6 +13,8 @@ class PongServer {
   private server: http.Server;
   private rooms: Map<string, GameRoom> = new Map();
   private playerRooms: Map<WebSocket, string> = new Map();
+  private playerIds: WeakMap<WebSocket, string> = new WeakMap();
+  private nextPlayerId: number = 0;
 
   constructor() {
     this.server = http.createServer(this.handleHttpRequest.bind(this));
@@ -232,7 +234,12 @@ class PongServer {
   }
 
   private getPlayerId(ws: WebSocket): string {
-    return (ws as any)._socket?.remoteAddress + ':' + (ws as any)._socket?.remotePort;
+    let id = this.playerIds.get(ws);
+    if (!id) {
+      id = `player_${this.nextPlayerId++}`;
+      this.playerIds.set(ws, id);
+    }
+    return id;
   }
 
   public listen(): void {

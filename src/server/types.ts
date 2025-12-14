@@ -20,7 +20,7 @@ export interface GameState {
 }
 
 export interface PlayerData {
-  game: any;
+  game: import('./game').Game;
   isPlayer1: boolean;
 }
 
