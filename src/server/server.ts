@@ -25,7 +25,9 @@ class PongServer {
 
   private handleHttpRequest(req: http.IncomingMessage, res: http.ServerResponse): void {
     const filePath = req.url === '/' ? '/index.html' : req.url;
-    const publicPath = path.join(__dirname, '../../public', filePath || '');
+    // Robust path resolution for different deployment environments
+    const publicDir = path.resolve(__dirname, '../../public');
+    const publicPath = path.join(publicDir, filePath || '');
     const extname = path.extname(publicPath);
     
     const contentTypes: { [key: string]: string } = {

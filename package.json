@@ -6,11 +6,16 @@
   "scripts": {
     "build": "tsc && tsc src/client/client.ts --outDir public --target ES2020 --lib ES2020,DOM --module ES2020 --moduleResolution bundler",
     "start": "node dist/server/server.js",
-    "dev": "npm run build && npm start"
+    "dev": "npm run build && npm start",
+    "render-build": "npm install && npm run build"
   },
   "keywords": ["pong", "multiplayer", "websocket", "typescript"],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "dependencies": {
     "ws": "^8.14.2"
   },

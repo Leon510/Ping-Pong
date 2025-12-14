@@ -1,0 +1,13 @@
+version: 2
+build:
+  commands:
+    - npm install
+    - npm run build
+  publishPath: ./public
+web:
+  buildCommand: npm run render-build
+  startCommand: npm start
+  healthCheckPath: /
+  envVars:
+    - key: NODE_ENV
+      value: production
