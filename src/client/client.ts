@@ -57,13 +57,16 @@ class PongClient {
     // Keyboard input
     document.addEventListener('keydown', (e) => {
       this.keys[e.key.toLowerCase()] = true;
-      this.sendInput();
     });
 
     document.addEventListener('keyup', (e) => {
       this.keys[e.key.toLowerCase()] = false;
-      this.sendInput();
     });
+
+    // Send input continuously at 60 FPS
+    setInterval(() => {
+      this.sendInput();
+    }, 1000 / 60);
 
     // UI buttons
     document.getElementById('createRoomBtn')?.addEventListener('click', () => {

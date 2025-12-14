@@ -5,11 +5,13 @@ const CANVAS_HEIGHT = 600;
 const PADDLE_HEIGHT = 100;
 const PADDLE_WIDTH = 10;
 const BALL_SIZE = 10;
-const PADDLE_SPEED = 5;
+const PADDLE_SPEED = 8;
 const INITIAL_BALL_SPEED = 5;
 
 export class Game {
   private gameState: GameState;
+  private player1Input: { up: boolean; down: boolean } = { up: false, down: false };
+  private player2Input: { up: boolean; down: boolean } = { up: false, down: false };
 
   constructor() {
     this.gameState = this.createInitialState();
@@ -59,18 +61,30 @@ export class Game {
 
   public handlePlayerInput(playerId: string, input: { up: boolean; down: boolean }): void {
     const isPlayer1 = this.gameState.player1.id === playerId;
-    const player = isPlayer1 ? this.gameState.player1 : this.gameState.player2;
-
-    if (input.up && player.paddleY > 0) {
-      player.paddleY -= PADDLE_SPEED;
-    }
-    if (input.down && player.paddleY < CANVAS_HEIGHT - PADDLE_HEIGHT) {
-      player.paddleY += PADDLE_SPEED;
+    
+    if (isPlayer1) {
+      this.player1Input = input;
+    } else {
+      this.player2Input = input;
     }
   }
 
   public update(): void {
     if (!this.gameState.gameStarted) return;
+
+    // Apply player inputs
+    if (this.player1Input.up && this.gameState.player1.paddleY > 0) {
+      this.gameState.player1.paddleY -= PADDLE_SPEED;
+    }
+    if (this.player1Input.down && this.gameState.player1.paddleY < CANVAS_HEIGHT - PADDLE_HEIGHT) {
+      this.gameState.player1.paddleY += PADDLE_SPEED;
+    }
+    if (this.player2Input.up && this.gameState.player2.paddleY > 0) {
+      this.gameState.player2.paddleY -= PADDLE_SPEED;
+    }
+    if (this.player2Input.down && this.gameState.player2.paddleY < CANVAS_HEIGHT - PADDLE_HEIGHT) {
+      this.gameState.player2.paddleY += PADDLE_SPEED;
+    }
 
     const ball = this.gameState.ball;
 
